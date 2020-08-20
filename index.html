@@ -7,6 +7,19 @@
 </head>
 <body>
     <div id="app">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <circle cx="100" cy="75" v-bind:r="radius" fill="lightpink"/>
+        </svg>
+        <input type="range" min="0" max="100" v-model="radius">
+        <img v-bind="item" v-bind:id="'thumb-' + item.id">
+        <p v-bind:class="classObject">text</p>
+        <p v-bind:style="styleObject">text</p>
+
+        <p>{{ count }} 回クリックしたよ！</p>
+        <button v-on:click="increment">up count</button>
+        <button v-on:click="decrement">down count</button>
+        <br>
+        <input type="text" :value="message">
         <button v-on:click="show=!show">切替</button>
         <transition>
             <p v-if="show">hello vue.js!</p>
