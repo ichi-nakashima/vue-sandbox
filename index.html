@@ -7,29 +7,24 @@
 </head>
 <body>
     <div id="app">
+        <!-- このフォームの入力値を新しいモンスターの名前に使う -->
+        名前 <input v-model="name">
+        <button v-on:click="doAdd">モンスター追加</button>
         <ul>
-            <li v-for="(item, key, index) in list" v-bind:key="item.id">
-                {{index}} {{key}} ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+            <li v-for="item in list"
+                v-bind:key="item.id"
+                v-bind:class="{ tuyoi: item.hp > 300 }">
+                ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+                <span v-if="item.hp > 300 ">つよい！</span>
             </li>
         </ul>
-
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-            <circle cx="100" cy="75" v-bind:r="radius" fill="lightpink"/>
-        </svg>
-        <input type="range" min="0" max="100" v-model="radius">
-        <img v-bind="item" v-bind:id="'thumb-' + item.id">
-        <p v-bind:class="classObject">text</p>
-        <p v-bind:style="styleObject">text</p>
-
-        <p>{{ count }} 回クリックしたよ！</p>
-        <button v-on:click="increment">up count</button>
-        <button v-on:click="decrement">down count</button>
-        <br>
-        <input type="text" :value="message">
-        <button v-on:click="show=!show">切替</button>
-        <transition>
-            <p v-if="show">hello vue.js!</p>
-        </transition>
+        <ul>
+            <li v-for="item in list"
+                v-if="item.hp < 300"
+                v-bind:class="{ yowai: item.hp < 300 }">
+                ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+            </li>
+        </ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="main.js"></script>
