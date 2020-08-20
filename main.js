@@ -3,6 +3,11 @@ var app = new Vue({
     el: '#app',
     // アプリケーションで使用するデータ
     data: {
+        list: [
+            { id: 1, name: 'スライム', hp: 100},
+            { id: 2, name: 'ゴブリン', hp: 200},
+            { id: 3, name: 'ドラゴン', hp: 500}
+        ],
         radius: 50,
         message: "vue.js",
         show: true,
