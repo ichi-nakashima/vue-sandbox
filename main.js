@@ -3,11 +3,7 @@ var app = new Vue({
     el: '#app',
     // アプリケーションで使用するデータ
     data: {
-        list: [
-            { id: 1, name: 'スライム', hp: 100},
-            { id: 2, name: 'ゴブリン', hp: 200},
-            { id: 3, name: 'ドラゴン', hp: 500}
-        ],
+        list: [],
         radius: 50,
         message: "vue.js",
         show: true,
@@ -26,7 +22,8 @@ var app = new Vue({
             alt: '商品1サムネイル',
             width: 200,
             height: 200
-        }
+        },
+        text: 'Vue'
     },
     // 算出プロパティ
     computed: {
@@ -35,17 +32,50 @@ var app = new Vue({
         }
     },
     // ライフサイクルハック（使用できるメソッドは決まっている。ex. created, mounted, etc..）
-    created: function() {
-        // TODO:
+    mounted: function() {
+        console.log(this.$el)
+        console.log(this.$refs.hello)
+    },
+    created: function () {
+        axios.get('list.json').then(function (response) {
+            // 取得したらlistリストに代入
+            this.list = response.data
+        }.bind(this)).catch(function(e) {
+            console.error(e)
+        })
     },
     // アプリケーションで使用するメソッド
     methods: {
+        handleClick: function() {
+            alert('クリックしたよ')
+        },
         increment: function () {
             // instance を指す this
             this.count += 1
         },
         decrement: function () {
             this.count -= 1
+        },
+        // 追加ボタンをクリックしたときのハンドラ
+        doAdd: function () {
+            // リスト内で最大のidを取得
+            var max = this.list.reduce(function(a, b) {
+                return a > b.id ? a : b.id
+            }, 0)
+            // 新しいモンスターをリストに追加
+            this.list.push({
+                id: max + 1, // 現在のリストの最大のidに+1してユニークなIDを作成
+                name: this.name, // 現在のフォームの入力値
+                hp: this.hp
+            })
+        },
+        // 削除ボタンをクイックしたときのハンドラ
+        doRemove: function (index) {
+            // 受け取ったindex 位置から一つ要素を削除
+            this.list.splice(index, 1)
+        },
+        doAttack: function (index) {
+            this.list[index].hp -= 10
         }
     }
 })

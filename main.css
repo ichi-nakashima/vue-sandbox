@@ -1,7 +1,16 @@
-.v-enter-active, .v-leave-active {
+@keyframes cloak-in {
+    0% { opaciy: 0; }
+}
+#app {
+    animation: cloak-in 1s;
+}
+#app[v-cloak] {
+    opacity: 0;
+}
+img {
+    opacity: 1;
     transition: opacity 1s;
 }
-
-.v-enter, .v-leave-to {
+img.hide {
     opacity: 0;
 }
